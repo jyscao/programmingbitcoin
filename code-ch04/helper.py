@@ -55,7 +55,7 @@ def decode_base58(s):
     for c in s:
         num *= 58
         num += BASE58_ALPHABET.index(c)
-    combined = num.to_bytes(25, byteorder='big')
+    combined = num.to_bytes(38, byteorder='big')
     checksum = combined[-4:]
     if hash256(combined[:-4])[:4] != checksum:
         raise ValueError('bad address: {} {}'.format(checksum, hash256(combined[:-4])[:4]))
@@ -65,15 +65,13 @@ def decode_base58(s):
 def little_endian_to_int(b):
     '''little_endian_to_int takes byte sequence as a little-endian number.
     Returns an integer'''
-    # use int.from_bytes()
-    raise NotImplementedError
+    return int.from_bytes(b, byteorder="little")
 
 
 def int_to_little_endian(n, length):
     '''endian_to_little_endian takes an integer and returns the little-endian
     byte sequence of length'''
-    # use n.to_bytes()
-    raise NotImplementedError
+    return n.to_bytes(length, byteorder="little")
 
 
 class HelperTest(TestCase):
